@@ -1,11 +1,5 @@
 <template>
   <!-- 布局的最外层结构 -->
-  <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>个人知识库</title>
-  </head>
-  <body>
   <!-- 应用的主容器 -->
   <div id="app">
     <div class="brain">
@@ -48,8 +42,6 @@
       </div>
     </div>
   </div>
-  </body>
-  </html>
 </template>
 
 <script>
