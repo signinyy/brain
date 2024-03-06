@@ -1,14 +1,14 @@
 <template >
   <NuxtLayout>
     <template v-slot:sidebar>
-    <!-- 侧边栏的具体内容 -->
-    <div class="sidebar-icon">
-      <div class="logo">
-        <a href="http://localhost:3000">
-        <img class="image" src="../assets/images/鸟.png" style="height: 28px">
-        </a>
+      <!-- 侧边栏的具体内容 -->
+      <div class="sidebar-icon">
+        <div class="logo">
+          <a href="http://localhost:3000">
+            <img class="image" src="../assets/images/鸟.png" style="height: 28px">
+          </a>
+        </div>
       </div>
-    </div>
       <!--搜索框布局-->
       <div class="sidebarAction">
         <div class="inputSearch">
@@ -66,16 +66,16 @@
     </template>
 
     <!-- 主内容 -->
-  <div slot="main">
-    <div class="main-content">
-      <!-- 主内容的具体内容 -->
+    <div slot="main">
+      <div class="main-content">
+        <!-- 主内容的具体内容 -->
+      </div>
     </div>
-  </div>
   </NuxtLayout>
 </template>
 
 <script setup>
-  import NuxtLayout from '../layouts/default.vue';
+import NuxtLayout from '../layouts/default.vue';
 
 </script>
 

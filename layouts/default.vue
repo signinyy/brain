@@ -98,6 +98,10 @@ const resizeHandler = () => {
 
 
 <style scoped>
+::selection {
+  color: inherit;
+  background: rgba(27,162,227,.2);
+}
 * {
   box-sizing: border-box;
 }
