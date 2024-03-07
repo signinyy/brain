@@ -1,14 +1,14 @@
 <template >
   <NuxtLayout>
     <template v-slot:sidebar>
-    <!-- 侧边栏的具体内容 -->
-    <div class="sidebar-icon">
-      <div class="logo">
-        <a href="http://localhost:3000">
-        <img class="image" src="../assets/images/鸟.png" style="height: 28px">
-        </a>
+      <!-- 侧边栏的具体内容 -->
+      <div class="sidebar-icon">
+        <div class="logo">
+          <a href="http://localhost:3000">
+            <img class="image" src="../assets/images/鸟.png" style="height: 28px">
+          </a>
+        </div>
       </div>
-    </div>
       <!--搜索框布局-->
       <div class="sidebarAction">
         <div class="inputSearch">
@@ -50,26 +50,10 @@
           </span>
         </li>
       </ul>
-      <div style="display: none;" aria-hidden="true"></div>
-      <div class=" dashboard-sidebar-scrollbar">
-        <div class="knowledgemenu">
-          <ul class="menu bookmenu resourcemenu">
-            <li class="ant-menu-submenu">
-              <div class="menu-submenu-title" style="padding-left: 2px">
-                <div class="switch-arrow-wrap">
-                  <img class="arrow-icon" src="../assets/images/下箭头.png" style="margin-right: 0px;width: 20px;min-width: 20px;height: 20px">
-                </div>
-                <span class="menu-title-content">
-                  <div class="menutitle">
-                    <a class="span" href="/dashboard/books">知识库</a>
-                    <img class="arrowright-icon" src="../assets/images/右箭头.png" style="width: 16px;height: 16px">
-                  </div>
-                </span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+
+
+
+
 
 
       <div class="bottomuser">
@@ -82,16 +66,16 @@
     </template>
 
     <!-- 主内容 -->
-  <div slot="main">
-    <div class="main-content">
-      <!-- 主内容的具体内容 -->
+    <div slot="main">
+      <div class="main-content">
+        <!-- 主内容的具体内容 -->
+      </div>
     </div>
-  </div>
   </NuxtLayout>
 </template>
 
 <script setup>
-  import NuxtLayout from '../layouts/default.vue';
+import NuxtLayout from '../layouts/default.vue';
 
 </script>
 
@@ -311,151 +295,20 @@ a{
   outline: none;
   color: #262626;
 }
-.dashboard-sidebar-scrollbar{
-  flex: 1 1 auto;
-  overflow: hidden;
-  scrobar-color: #e7e9e8;
-  scrollbar-width: thin;
-}
-.sidebarmenu,.knowledgemenu{
-  border: 0;
-  padding: 0 10px;
-  width: 91% !important;
-  background-color:#fafafa ;
-}
-.sidebarmenu .knowledgemenu ,.menu{transition: none;}
-.sidebarmenu .knowledgemenu ,.menu{
-  border: none;
-  width: 100%;
-  background-color: #fafafa;
-}
-.menu{box-shadow:none;}
-.resourcemenu{margin-top: 14px;padding-left:0;list-style-type: none}
-.ant-menu-submenu{
-  padding-bottom: .02px;
-  transition: border-color .3s cubic-bezier(.645,.045,.355,1),background .3s cubic-bezier(.645,.045,.355,1),padding .15s cubic-bezier(.645,.045,.355,1);
-}
-.sidebarmenu .knowledgemenu .ant-menu-submenu > .menu-submenu-title{
-  background-color: #eff0f0;
-  border-radius: 6px;
-}
-.knowledgemenu .ant-menu-submenu > .menu-submenu-title{
-  line-height: 32px;
-  height: 32px;
-  border-radius: 6px;
-  width: 65%;
-  margin: 4px 0;
-}
-.sidebarmenu .knowledgemenu .menu-submenu-title{transition: none}
-.ant-menu-submenu .menu .menu-submenu-title{display: flex;align-items: center}
-.menu{
-  font-variant: tabular-nums;
-  font-feature-settings: "tnum","tnum";
-  color: #262626;
-  font-size: 14px;
-  text-align: left;
-  list-style: none;
-}
-.resourcemenu .menu-submenu-title{padding-right: 4px;padding-left: 4px !important;}
-.ant-menu-submenu .menu-submenu-title{
-  padding: 0 16px;
-  text-overflow: ellipsis;
-}
-.menu-submenu-title{
-  position: relative;
-  white-space: nowrap;
-  cursor: pointer;
-}
-.sidebarmenu .knowledgemenu .switch-arrow-wrap{transition: none}
-.ant-menu-submenu .menu .menu-submenu-title > *{flex: none}
-.resourcemenu .switch-arrow-wrap{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  margin: 0;
-  color: #8a8f8d;
-}
-.menu-submenu-title .switch-arrow-wrap{
-  min-width: 14px;
-  font-size: 14px;
-}
-.resourcemenu .switch-arrow-wrap img{margin: 0;}
-.arrow-icon{
-  display: inline-block;
-  color: inherit;
-  font-style: normal;
-  line-height: 1;
-  text-align: center;
-  text-transform: none;
-  text-rendering: optimizeLegibility;
-}
-.switch-arrow-wrap {
-  /* 添加初始背景颜色 */
-  background-color: transparent;
-  /* 添加过渡效果 */
-  transition: background-color 0.3s ease;
-  /* 其他样式保持不变 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  margin: 0;
-  color: #8a8f8d;
-}
-.arrow-icon {
-  /* 初始状态下使图片透明一些 */
-  opacity: 0.5;
-  /* 添加过渡效果 */
-  transition: opacity 0.3s ease;
-  /* 其他样式保持不变 */
-  display: inline-block;
-  color: inherit;
-  font-style: normal;
-  line-height: 1;
-  text-align: center;
-  text-transform: none;
-  text-rendering: optimizeLegibility;
-}
-/* 当鼠标悬停在.switch-arrow-wrap上时 */
-.switch-arrow-wrap:hover {
-  /* 改变背景颜色 */
-  background-color: #c4c4c4; /* 可以设置为你想要的颜色 */
-}
-/* 当鼠标悬停在.switch-arrow-wrap上时，改变.arrow-icon的透明度 */
-.switch-arrow-wrap:hover .arrow-icon {
-  /* 完全不透明，使图片看起来更亮 */
-  opacity: 1;
-}
-.resourcemenu .menutitle{display: flex;align-items: center}
-.menu .menu-submenu-title > .menu-title-content{
-  flex: auto;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.sidebarmenu .knowledgemenu .sidebarmenu{transition: none;}
-.resourcemenu .menu-submenu-title > .title-content{margin-left: 6px;}
-.menu-submenu-title .switch-arrow-wrap{opacity: 1;}
-.resourcemenu .menutitle{display: flex;align-items: center}
-.resourcemenu .menutitle .span{flex: 1 1 auto;color: #262626}
-.resourcemenu .menutitle img{color: #8a8f8d;margin-right: 6px}
-.arrowright-icon{
-  display: inline-block;
-  font-style: normal;
-  line-height: 0;
-  text-align: center;
-  text-transform: none;
-  text-rendering: optimizeLegibility;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
