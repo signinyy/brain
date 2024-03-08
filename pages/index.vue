@@ -66,6 +66,29 @@
                   </div>
                 </span>
               </div>
+              <ul id="menu-books-popup" class="ant-menu ant-menu-sub ant-menu-inline">
+                <div class="sortable" data-type="books" eventkey="知识库-sortable">
+                  <li class="ant-menu-item menuItem" style="padding-left: 2px;">
+                    <span class="itemAction item-drag-action">
+                      <img class="brain-icon-drag" src="../assets/images/拖动.png">
+                    </span>
+                    <div class="itemwrapper">
+                      <div class="bookItem">
+                        <a class="link" href="">
+                          <div class="iconwrapper">
+                            <img class="book-icon" src="../assets/images/知识库.png" style="width: 18px;height: 18px;min-width: 18px;">
+                          </div>
+                          <span class="sub-item-name index-module_name" title="d">d</span>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="badgewrapper"></div>
+                    <span class="itemAction books-action popover-trigger">
+                      <img class="icon-new-ellipsis" src="../assets/images/省略号.png">
+                    </span>
+                  </li>
+                </div>
+              </ul>
             </li>
           </ul>
         </div>
@@ -343,7 +366,7 @@ a{
   line-height: 32px;
   height: 32px;
   border-radius: 6px;
-  width: 65%;
+  width: 85%;
   margin: 4px 0;
 }
 .sidebarmenu .knowledgemenu .menu-submenu-title{transition: none}
@@ -365,21 +388,10 @@ a{
   position: relative;
   white-space: nowrap;
   cursor: pointer;
+  display: flex;
 }
 .sidebarmenu .knowledgemenu .switch-arrow-wrap{transition: none}
 .ant-menu-submenu .menu .menu-submenu-title > *{flex: none}
-.resourcemenu .switch-arrow-wrap{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  margin: 0;
-  color: #8a8f8d;
-}
 .menu-submenu-title .switch-arrow-wrap{
   min-width: 14px;
   font-size: 14px;
@@ -395,11 +407,8 @@ a{
   text-rendering: optimizeLegibility;
 }
 .switch-arrow-wrap {
-  /* 添加初始背景颜色 */
   background-color: transparent;
-  /* 添加过渡效果 */
   transition: background-color 0.3s ease;
-  /* 其他样式保持不变 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -408,15 +417,12 @@ a{
   border-radius: 6px;
   cursor: pointer;
   position: relative;
-  margin: 0;
+  margin-top: 3px;
   color: #8a8f8d;
 }
 .arrow-icon {
-  /* 初始状态下使图片透明一些 */
   opacity: 0.5;
-  /* 添加过渡效果 */
   transition: opacity 0.3s ease;
-  /* 其他样式保持不变 */
   display: inline-block;
   color: inherit;
   font-style: normal;
@@ -425,21 +431,16 @@ a{
   text-transform: none;
   text-rendering: optimizeLegibility;
 }
-/* 当鼠标悬停在.switch-arrow-wrap上时 */
 .switch-arrow-wrap:hover {
-  /* 改变背景颜色 */
-  background-color: #c4c4c4; /* 可以设置为你想要的颜色 */
+  background-color: #c4c4c4;
 }
-/* 当鼠标悬停在.switch-arrow-wrap上时，改变.arrow-icon的透明度 */
 .switch-arrow-wrap:hover .arrow-icon {
-  /* 完全不透明，使图片看起来更亮 */
   opacity: 1;
 }
-.resourcemenu .menutitle{display: flex;align-items: center}
+.menu-title-content{margin-left: 6px}
 .menu .menu-submenu-title > .menu-title-content{
   flex: auto;
   min-width: 0;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 .sidebarmenu .knowledgemenu .sidebarmenu{transition: none;}
@@ -456,6 +457,143 @@ a{
   text-transform: none;
   text-rendering: optimizeLegibility;
 }
+.rotated {
+  transform: rotate(-45deg)  translateX(-2.5px);
+  transition: background .3s cubic-bezier(.645,.045,.355,1),transform .3s cubic-bezier(.645,.045,.355,1),top .3s cubic-bezier(.645,.045,.355,1),color .3s cubic-bezier(.645,.045,.355,1);
+}
+.sidebarmenu .knowledgemenu  {background: transparent}
+.ant-menu-inline{background: transparent} .ant-menu-sub{background: transparent}
+.sidebarmenu .knowledgemenu .ant-menu-sub{transition: none}
+.ant-menu-sub.ant-menu-inline {
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.ant-menu-submenu .ant-menu-sub{cursor: auto}
+.ant-menu ul{margin: 0;list-style: none;}
+.ant-menu-inline{width: 100%}
+.sidebarmenu .knowledgemenu {transition: none}.ant-menu-item{transition: none}
+.sidebarmenu .knowledgemenu .ant-menu-item{
+  line-height: 32px;
+  height: 32px;
+  border-radius: 6px;
+  width: 100%;
+  margin: 4px 0;
+}
+.ant-menu-inline.ant-menu .ant-menu-item{display: flex;align-items: center;}
+.resourcemenu .menuItem{justify-content: flex-start;position: relative;padding-right: 4px}
+.ant-menu-inline .ant-menu-item{
+  padding: 0 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ant-menu-item{white-space: nowrap;}
+.resourcemenu .menuItem .itemAction{
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  color: #8a8f8d;
+  position: relative;
+  width: 20px;
+  height: 24px;
+  border-radius: 6px;
+  visibility: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 16px;
+}
+.resourcemenu .menuItem:hover .itemAction{visibility: visible;}
+.resourcemenu .menuItem .itemAction:hover{background: #d8dad9;color: #262626}
+.brain-icon-drag{
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  text-rendering: optimizeLegibility;
+}
+.resourcemenu .menuItem .itemwrapper{
+  flex: 1 1 auto !important;
+  overflow: hidden;
+}
+.bookItem{
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+.bookItem .link{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.ant-menu-item a{color: #262626}
+.bookItem .iconwrapper{
+  width: 18px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.book-icon{
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  text-rendering: optimizeLegibility;
+}
+.bookItem .link .index-module_name{
+  display: inline-block;
+  margin-left: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #585a5a;
+}
+.resourcemenu .menuItem .badgewrapper{
+  position: absolute;
+  right: 13px;
+  top: -2px;
+  z-index: 3;
+}
+.resourcemenu .menuItem:hover .itemAction{visibility: visible}
+.resourcemenu .menuItem:hover .itemAction:hover{background: #d8dad9;color: #262626}
+.resourcemenu .menuItem .itemAction{
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  color: #8a8f8d;
+  position: relative;
+  width: 20px;
+  height: 24px;
+  border-radius: 6px;
+  visibility: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 16px;
+}
+.icon-new-ellipsis{
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  text-rendering: optimizeLegibility;
+}
+
+
+
+
+
 
 
 
