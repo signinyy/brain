@@ -91,31 +91,52 @@
               </ul>
             </li>
           </ul>
-        </div>
-      </div>
-
-
-      <div class="bottomuser">
-        <div class="index-bottom">
-          <div class="module_tip">
-
+          <div style="display: none;" aria-hidden="true">
+            <div class="sortable" data-type="books" eventkey="知识库-sortable"></div>
           </div>
         </div>
       </div>
+
+
+      <button>
+      <div class="bottomuser" >
+        <div class="index-bottom" @click.stop="showPopup = true">
+          <div class="module_tip">
+            <span class="persion-avatar">
+              <div class="headeruser">
+                <img class="img" src="../assets/images/头像.png" style="width: 24px; min-width: 24px;height: 24px;border-radius: 12px;}">
+              </div>
+              <div class="flex-1 break-all ws-nowrap ml-8px" style="opacity: 1; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;">
+                yy
+              </div>
+            </span>
+          </div>
+        </div>
+        <button class="shrink">
+          <img src="../assets/images/收缩.png" style="width:1em; height:1em">
+        </button>
+      </div>
+      </button>
+      <Popup v-model:visible="showPopup"/>
     </template>
 
+
+    <template v-slot:main>
     <!-- 主内容 -->
-  <div slot="main">
     <div class="main-content">
       <!-- 主内容的具体内容 -->
+
     </div>
-  </div>
+  </template>
   </NuxtLayout>
 </template>
 
 <script setup>
-  import NuxtLayout from '../layouts/default.vue';
+import NuxtLayout from '../layouts/default.vue';
+import Popup from '../components/Popup.vue';
+import { ref } from 'vue';
 
+const showPopup = ref(false);
 </script>
 
 <style scoped>
@@ -589,15 +610,6 @@ a{
   text-transform: none;
   text-rendering: optimizeLegibility;
 }
-
-
-
-
-
-
-
-
-
 .sidebarmenu .menuwrapper .brain-icon{margin-right: 10px}
 .brain-icon{
   color: inherit;
@@ -605,25 +617,36 @@ a{
   line-height: 0;
   text-align: center;
   text-transform: none;
-  text-rendering: optimizeLegibility;width: 16px;height: 16px;}
-
+  text-rendering: optimizeLegibility;width: 16px;height: 16px;
+}
+button{
+  overflow: visible;
+  box-sizing: border-box;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  outline: none;
+}
 .bottomuser{
   flex: 0 0 auto;
   padding: 0 11px;
   margin-top: 12px;
-  flex-basis: auto;
-  flex-grow: 0;
-  flex-shrink:0;
+  cursor: pointer;
 }
+.index-bottom:hover{background-color: #e4e6e7}
 .index-bottom{
-  display: none;
-  background-color: #fcf5e6;
-  border: 1px solid #f6e1ac;
-  height: auto;
-  width: 90%;
+  background-color: #fff;
+  border: 1px solid #e7e9e8;
+  height: 100%;
+  width: 100%;
   max-width: 250px;
   padding: 10px;
   border-radius: 8px;
+  box-sizing: border-box;
 }
 .module_tip{
   flex-direction: column;
@@ -633,4 +656,38 @@ a{
   width: 100%;
   position: relative;
 }
+.persion-avatar{
+  display: flex;
+  border-radius: 6px;
+  padding: 2px 6px;
+  cursor: pointer;
+  max-width: 178px;
+  align-items: center;
+  height: 32px;
+  line-height: 25px;
+}
+.headeruser{
+  display: flex;
+  align-items: center;
+}
+.img{border-style: none;}
+.break-all {word-break: break-all;}
+.ws-nowrap {white-space: nowrap;}
+.flex-1 {flex: 1;}
+.ml-8px {margin-left: 10px;}
+.shrink{
+  color: #1f2329;
+  font-size: 16px;
+  background-color: transparent;
+  border-radius: 4px;
+  border-width: 0;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  width: 44px;
+  height: 32px;
+  margin-top: 9px;
+}
+.shrink:hover{background-color: #e4e6e7}
 </style>
