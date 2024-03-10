@@ -66,33 +66,77 @@
                   </div>
                 </span>
               </div>
+              <ul id="menu-books-popup" class="ant-menu ant-menu-sub ant-menu-inline">
+                <div class="sortable" data-type="books" eventkey="知识库-sortable">
+                  <li class="ant-menu-item menuItem" style="padding-left: 2px;">
+                    <span class="itemAction item-drag-action">
+                      <img class="brain-icon-drag" src="../assets/images/拖动.png">
+                    </span>
+                    <div class="itemwrapper">
+                      <div class="bookItem">
+                        <a class="link" href="">
+                          <div class="iconwrapper">
+                            <img class="book-icon" src="../assets/images/知识库.png" style="width: 18px;height: 18px;min-width: 18px;">
+                          </div>
+                          <span class="sub-item-name index-module_name" title="d">d</span>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="badgewrapper"></div>
+                    <span class="itemAction books-action popover-trigger">
+                      <img class="icon-new-ellipsis" src="../assets/images/省略号.png">
+                    </span>
+                  </li>
+                </div>
+              </ul>
             </li>
           </ul>
-        </div>
-      </div>
-
-
-      <div class="bottomuser">
-        <div class="index-bottom">
-          <div class="module_tip">
-
+          <div style="display: none;" aria-hidden="true">
+            <div class="sortable" data-type="books" eventkey="知识库-sortable"></div>
           </div>
         </div>
       </div>
+
+
+      <button>
+      <div class="bottomuser" >
+        <div class="index-bottom" @click.stop="showPopup = true">
+          <div class="module_tip">
+            <span class="persion-avatar">
+              <div class="headeruser">
+                <img class="img" src="../assets/images/头像.png" style="width: 24px; min-width: 24px;height: 24px;border-radius: 12px;}">
+              </div>
+              <div class="flex-1 break-all ws-nowrap ml-8px" style="opacity: 1; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;">
+                yy
+              </div>
+            </span>
+          </div>
+        </div>
+        <button class="shrink">
+          <img src="../assets/images/收缩.png" style="width:1em; height:1em">
+        </button>
+      </div>
+      </button>
+      <Popup v-model:visible="showPopup"/>
     </template>
 
+
+    <template v-slot:main>
     <!-- 主内容 -->
-  <div slot="main">
     <div class="main-content">
       <!-- 主内容的具体内容 -->
+
     </div>
-  </div>
+  </template>
   </NuxtLayout>
 </template>
 
 <script setup>
-  import NuxtLayout from '../layouts/default.vue';
+import NuxtLayout from '../layouts/default.vue';
+import Popup from '../components/Popup.vue';
+import { ref } from 'vue';
 
+const showPopup = ref(false);
 </script>
 
 <style scoped>
@@ -343,7 +387,7 @@ a{
   line-height: 32px;
   height: 32px;
   border-radius: 6px;
-  width: 65%;
+  width: 85%;
   margin: 4px 0;
 }
 .sidebarmenu .knowledgemenu .menu-submenu-title{transition: none}
@@ -365,21 +409,10 @@ a{
   position: relative;
   white-space: nowrap;
   cursor: pointer;
+  display: flex;
 }
 .sidebarmenu .knowledgemenu .switch-arrow-wrap{transition: none}
 .ant-menu-submenu .menu .menu-submenu-title > *{flex: none}
-.resourcemenu .switch-arrow-wrap{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  margin: 0;
-  color: #8a8f8d;
-}
 .menu-submenu-title .switch-arrow-wrap{
   min-width: 14px;
   font-size: 14px;
@@ -395,11 +428,8 @@ a{
   text-rendering: optimizeLegibility;
 }
 .switch-arrow-wrap {
-  /* 添加初始背景颜色 */
   background-color: transparent;
-  /* 添加过渡效果 */
   transition: background-color 0.3s ease;
-  /* 其他样式保持不变 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -408,15 +438,12 @@ a{
   border-radius: 6px;
   cursor: pointer;
   position: relative;
-  margin: 0;
+  margin-top: 3px;
   color: #8a8f8d;
 }
 .arrow-icon {
-  /* 初始状态下使图片透明一些 */
   opacity: 0.5;
-  /* 添加过渡效果 */
   transition: opacity 0.3s ease;
-  /* 其他样式保持不变 */
   display: inline-block;
   color: inherit;
   font-style: normal;
@@ -425,21 +452,16 @@ a{
   text-transform: none;
   text-rendering: optimizeLegibility;
 }
-/* 当鼠标悬停在.switch-arrow-wrap上时 */
 .switch-arrow-wrap:hover {
-  /* 改变背景颜色 */
-  background-color: #c4c4c4; /* 可以设置为你想要的颜色 */
+  background-color: #c4c4c4;
 }
-/* 当鼠标悬停在.switch-arrow-wrap上时，改变.arrow-icon的透明度 */
 .switch-arrow-wrap:hover .arrow-icon {
-  /* 完全不透明，使图片看起来更亮 */
   opacity: 1;
 }
-.resourcemenu .menutitle{display: flex;align-items: center}
+.menu-title-content{margin-left: 6px}
 .menu .menu-submenu-title > .menu-title-content{
   flex: auto;
   min-width: 0;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 .sidebarmenu .knowledgemenu .sidebarmenu{transition: none;}
@@ -456,10 +478,138 @@ a{
   text-transform: none;
   text-rendering: optimizeLegibility;
 }
-
-
-
-
+.rotated {
+  transform: rotate(-45deg)  translateX(-2.5px);
+  transition: background .3s cubic-bezier(.645,.045,.355,1),transform .3s cubic-bezier(.645,.045,.355,1),top .3s cubic-bezier(.645,.045,.355,1),color .3s cubic-bezier(.645,.045,.355,1);
+}
+.sidebarmenu .knowledgemenu  {background: transparent}
+.ant-menu-inline{background: transparent} .ant-menu-sub{background: transparent}
+.sidebarmenu .knowledgemenu .ant-menu-sub{transition: none}
+.ant-menu-sub.ant-menu-inline {
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.ant-menu-submenu .ant-menu-sub{cursor: auto}
+.ant-menu ul{margin: 0;list-style: none;}
+.ant-menu-inline{width: 100%}
+.sidebarmenu .knowledgemenu {transition: none}.ant-menu-item{transition: none}
+.sidebarmenu .knowledgemenu .ant-menu-item{
+  line-height: 32px;
+  height: 32px;
+  border-radius: 6px;
+  width: 100%;
+  margin: 4px 0;
+}
+.ant-menu-inline.ant-menu .ant-menu-item{display: flex;align-items: center;}
+.resourcemenu .menuItem{justify-content: flex-start;position: relative;padding-right: 4px}
+.ant-menu-inline .ant-menu-item{
+  padding: 0 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ant-menu-item{white-space: nowrap;}
+.resourcemenu .menuItem .itemAction{
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  color: #8a8f8d;
+  position: relative;
+  width: 20px;
+  height: 24px;
+  border-radius: 6px;
+  visibility: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 16px;
+}
+.resourcemenu .menuItem:hover .itemAction{visibility: visible;}
+.resourcemenu .menuItem .itemAction:hover{background: #d8dad9;color: #262626}
+.brain-icon-drag{
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  text-rendering: optimizeLegibility;
+}
+.resourcemenu .menuItem .itemwrapper{
+  flex: 1 1 auto !important;
+  overflow: hidden;
+}
+.bookItem{
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+.bookItem .link{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.ant-menu-item a{color: #262626}
+.bookItem .iconwrapper{
+  width: 18px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.book-icon{
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  text-rendering: optimizeLegibility;
+}
+.bookItem .link .index-module_name{
+  display: inline-block;
+  margin-left: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #585a5a;
+}
+.resourcemenu .menuItem .badgewrapper{
+  position: absolute;
+  right: 13px;
+  top: -2px;
+  z-index: 3;
+}
+.resourcemenu .menuItem:hover .itemAction{visibility: visible}
+.resourcemenu .menuItem:hover .itemAction:hover{background: #d8dad9;color: #262626}
+.resourcemenu .menuItem .itemAction{
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  color: #8a8f8d;
+  position: relative;
+  width: 20px;
+  height: 24px;
+  border-radius: 6px;
+  visibility: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 16px;
+}
+.icon-new-ellipsis{
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  text-rendering: optimizeLegibility;
+}
 .sidebarmenu .menuwrapper .brain-icon{margin-right: 10px}
 .brain-icon{
   color: inherit;
@@ -467,25 +617,36 @@ a{
   line-height: 0;
   text-align: center;
   text-transform: none;
-  text-rendering: optimizeLegibility;width: 16px;height: 16px;}
-
+  text-rendering: optimizeLegibility;width: 16px;height: 16px;
+}
+button{
+  overflow: visible;
+  box-sizing: border-box;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  outline: none;
+}
 .bottomuser{
   flex: 0 0 auto;
   padding: 0 11px;
   margin-top: 12px;
-  flex-basis: auto;
-  flex-grow: 0;
-  flex-shrink:0;
+  cursor: pointer;
 }
+.index-bottom:hover{background-color: #e4e6e7}
 .index-bottom{
-  display: none;
-  background-color: #fcf5e6;
-  border: 1px solid #f6e1ac;
-  height: auto;
-  width: 90%;
+  background-color: #fff;
+  border: 1px solid #e7e9e8;
+  height: 100%;
+  width: 100%;
   max-width: 250px;
   padding: 10px;
   border-radius: 8px;
+  box-sizing: border-box;
 }
 .module_tip{
   flex-direction: column;
@@ -495,4 +656,38 @@ a{
   width: 100%;
   position: relative;
 }
+.persion-avatar{
+  display: flex;
+  border-radius: 6px;
+  padding: 2px 6px;
+  cursor: pointer;
+  max-width: 178px;
+  align-items: center;
+  height: 32px;
+  line-height: 25px;
+}
+.headeruser{
+  display: flex;
+  align-items: center;
+}
+.img{border-style: none;}
+.break-all {word-break: break-all;}
+.ws-nowrap {white-space: nowrap;}
+.flex-1 {flex: 1;}
+.ml-8px {margin-left: 10px;}
+.shrink{
+  color: #1f2329;
+  font-size: 16px;
+  background-color: transparent;
+  border-radius: 4px;
+  border-width: 0;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  width: 44px;
+  height: 32px;
+  margin-top: 9px;
+}
+.shrink:hover{background-color: #e4e6e7}
 </style>
