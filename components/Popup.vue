@@ -19,16 +19,18 @@
               <span class="color-danger">退出登录</span>
             </div>
             <div class="login-out">
-              <span class="loginout-tooltip">
+              <span class="loginout-tooltip" @click="switchLanguage">
                 <div class="linkwrapper">
-                  <img class="set-icon" src="../assets/images/中英文切换（英）.png">
+                  <img class="set-icon" :src="currentLanguage === 'zh' ? zhIcon : enIcon" alt="Language">
+                  <span class="tooltiptext">{{ currentLanguage === 'zh' ? '切换中文' : 'English' }}</span>
                 </div>
               </span>
             </div>
             <div class="login-out">
-              <span class="loginout-tooltip">
+              <span class="loginout-tooltip"  @click="switchTheme">
                 <div class="linkwrapper">
-                  <img class="switchtheme-icon" src="../assets/images/太阳.png">
+                  <img class="switchtheme-icon" :src="currentTheme === 'light' ? lightIcon : darkIcon" alt="Theme">
+                  <span class="tooltiptext">{{ currentTheme === 'light' ? '亮色' : '暗黑' }}</span>
                 </div>
               </span>
             </div>
@@ -41,11 +43,9 @@
 
 <script setup>
 import { defineProps, defineEmits } from 'vue';
-
-const props = defineProps({
+defineProps({
   visible: Boolean
 });
-
 const emit = defineEmits(['update:visible']);
 
 function handleClickOutside(event) {
@@ -55,9 +55,30 @@ function handleClickOutside(event) {
     emit('update:visible', false);
   }
 }
+
+import { ref } from 'vue';
+
+const currentLanguage = ref('en'); // 假设初始语言是英文
+const currentTheme = ref('light'); // 假设初始主题是浅色
+
+const zhIcon = '/切换中文.png';
+const enIcon = '/中英文切换（英）.png';
+const lightIcon = '/太阳.png';
+const darkIcon = '/月亮.png';
+
+function switchLanguage() {
+  currentLanguage.value = currentLanguage.value === 'en' ? 'zh' : 'en';
+}
+
+function switchTheme() {
+  currentTheme.value = currentTheme.value === 'light' ? 'dark' : 'light';
+}
 </script>
 
 <style scoped>
+.quit-children:hover{background-color: #e4e6e7}
+.set-children:hover{background-color: #e4e6e7}
+.linkwrapper:hover{background-color: #e4e6e7}
 /* Popup 样式 */
 .popup {
   /* 确保弹窗覆盖了整个可点击区域 */
@@ -161,5 +182,55 @@ function handleClickOutside(event) {
   text-rendering: optimizeLegibility;
   width: 16px;
   height: 16px;
+
+}
+.login-out {
+  display: flex;
+  align-items: center;
+}
+
+.loginout-tooltip {
+  position: relative; /* 用于定位 tooltip */
+  display: inline-block;
+  cursor: pointer;
+}
+
+.loginout-tooltip .tooltiptext {
+  visibility: hidden;
+  width: auto; /* 根据内容自动调整宽度 */
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 4px 8px; /* 调整内边距 */
+  border-radius: 4px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%; /* 定位到元素下方 */
+  left: 50%;
+  transform: translateX(-50%); /* 水平居中 */
+  opacity: 0;
+  transition: opacity 0.3s, bottom 0.3s; /* 过渡效果 */
+  white-space: nowrap; /* 防止文本换行 */
+  font-size: 12px; /* 调整字体大小 */
+}
+
+.loginout-tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+  bottom: calc(100% + 10px); /* 根据需要调整距离 */
+}
+
+.set-icon,
+.switchtheme-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle; /* 垂直居中图标 */
+  transition: transform 0.2s; /* 过渡效果 */
+}
+
+.loginout-tooltip:hover .set-icon,
+.loginout-tooltip:hover .switchtheme-icon {
+  transform: scale(1.1); /* 悬停时放大图标 */
 }
 </style>

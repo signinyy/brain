@@ -112,8 +112,14 @@
             </span>
           </div>
         </div>
-        <button class="shrink">
+        <button class="shrink"
+                @mouseover="showHover = true"
+                @mouseout="showHover = false"
+                @click="toggleSidebarWidth">
           <img src="../assets/images/收缩.png" style="width:1em; height:1em">
+          <div class="hover-tip" v-if="showHover" @click.stop>
+            {{ isSidebarCollapsed ? '展开' : '收起' }}
+          </div>
         </button>
       </div>
       </button>
@@ -137,6 +143,19 @@ import Popup from '../components/Popup.vue';
 import { ref } from 'vue';
 
 const showPopup = ref(false);
+
+const showHover = ref(false);
+const isSidebarCollapsed = ref(false);
+
+// 假设这是从父组件传递来的方法，用于改变侧边栏宽度
+const toggleSidebarWidth = () => {
+  isSidebarCollapsed.value = !isSidebarCollapsed.value;
+  emit('toggleSidebar', isSidebarCollapsed.value);
+};
+
+// 触发自定义事件通知父组件
+const emit = defineEmits(['toggleSidebar']);
+
 </script>
 
 <style scoped>
@@ -690,4 +709,21 @@ button{
   margin-top: 9px;
 }
 .shrink:hover{background-color: #e4e6e7}
+.hover-tip {
+  width: auto; /* 与.shrink宽度相同 */
+  height: auto; /* 与.shrink高度相同 */
+  background-color: #000; /* 设置您想要的颜色 */
+  color: #fff;
+  border-radius: 4px; /* 圆角与.shrink相同 */
+  display: flex; /* 确保与.shrink并排显示 */
+  vertical-align: top; /* 如果需要，确保垂直对齐 */
+  margin-left: 120px; /* 根据需要调整间距 */
+  justify-content: center;
+  padding: 1px 4px;
+  align-items: center;
+  position: absolute;
+  margin-top: 4px;
+  font-size: 12px;
+  border-width: 0;
+}
 </style>
