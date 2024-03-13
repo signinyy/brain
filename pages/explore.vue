@@ -133,11 +133,7 @@
 
 
     <template v-slot:main>
-      <div class="main">
-        <div class="main-content" >
-          <!-- 主内容的具体内容 -->
-        </div>
-      </div>
+
     </template>
   </NuxtLayout>
 </template>
@@ -842,12 +838,5 @@ button{
   font-size: 12px;
   border-width: 0;
 }
-.main {
-  padding: 0;
-  flex: auto;
-  min-width: 0;
-  position: relative;
-  max-width: 100%;
-  min-height: 1px;
-}
+
 </style>

@@ -3,8 +3,8 @@
   <!-- 应用的主容器 -->
   <div id="app">
     <div class="brain">
-      <div class="container"  :style="{ width: '100%' }">
-        <div class="index-module">
+      <div class="container"  :style="{ width: sidebarWidth + 'px' }">
+        <div class="index-module" :style="{ width: sidebarWidth + 'px' }">
           <div class="dashboardsidebar" :style="{ width: sidebarWidth + 'px' }" >
             <div class="sidebarmenu">
               <slot name="sidebar"></slot>
@@ -22,9 +22,7 @@
           <div class="mainright">
             <div class="dashboardlayout">
               <div class="ant-row">
-                <div class="main">
                   <slot name="main"></slot>
-                </div>
               </div>
             </div>
           </div>
@@ -79,16 +77,6 @@ onUnmounted(() => {
 
 
 <style scoped>
-.sidebar.collapsed {
-  /* 收缩时的样式 */
-  width: 50px; /* 或其他合适的宽度 */
-}
-.sidebar {
-  /* 展开时的样式 */
-  width: 200px; /* 或其他合适的宽度 */
-  transition: width 0.3s ease; /* 添加过渡效果 */
-}
-
 ::selection {
   color: inherit;
   background: rgba(27, 162, 227, .2);
@@ -200,14 +188,5 @@ img:not(:root) {
 .ant-row {
   display: flex;
   flex-flow: row wrap;
-}
-
-.main {
-  padding: 0;
-  flex: auto;
-  min-width: 0;
-  position: relative;
-  max-width: 100%;
-  min-height: 1px;
 }
 </style>

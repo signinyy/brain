@@ -133,11 +133,7 @@
 
 
     <template v-slot:main>
-      <div class="main">
-        <div class="main-content" >
-          <!-- 主内容的具体内容 -->
-        </div>
-      </div>
+
     </template>
   </NuxtLayout>
 </template>
@@ -163,10 +159,6 @@ const isSubMenuOpen = ref(true); // 初始状态，子菜单是展开的
 const toggleSubMenu = () => {
   isSubMenuOpen.value = !isSubMenuOpen.value;
 };
-
-
-
-
 
 const items = ref([
   // 假设的菜单项数据，每个对象有一个唯一的 id 和其他属性
@@ -841,13 +833,5 @@ button{
   margin-top: 4px;
   font-size: 12px;
   border-width: 0;
-}
-.main {
-  padding: 0;
-  flex: auto;
-  min-width: 0;
-  position: relative;
-  max-width: 100%;
-  min-height: 1px;
 }
 </style>

@@ -43,6 +43,7 @@
 
 <script setup>
 import { defineProps, defineEmits } from 'vue';
+import { ref } from "vue";
 defineProps({
   visible: Boolean
 });
@@ -55,8 +56,6 @@ function handleClickOutside(event) {
     emit('update:visible', false);
   }
 }
-
-import { ref } from 'vue';
 
 const currentLanguage = ref('en'); // 假设初始语言是英文
 const currentTheme = ref('light'); // 假设初始主题是浅色
@@ -71,7 +70,7 @@ function switchLanguage() {
 }
 
 function switchTheme() {
-  currentTheme.value = currentTheme.value === 'light' ? 'dark' : 'light';
+    currentTheme.value = currentTheme.value === 'light' ? 'dark' : 'light';
 }
 </script>
 
