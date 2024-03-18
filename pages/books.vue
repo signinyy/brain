@@ -66,14 +66,16 @@
                   </div>
                 </span>
               </div>
-              <ul id="menu-books-popup" class="ant-menu ant-menu-sub ant-menu-inline"  v-show="isSubMenuOpen"   @mousedown.prevent="startDrag" @mouseup="endDrag" @mousemove="drag" >
+
+              <ul id="menu-books-popup" class="ant-menu ant-menu-sub ant-menu-inline"  v-show="isSubMenuOpen"    >
                 <div class="sortable" data-type="books" eventkey="知识库-sortable"   >
                   <li class="ant-menu-item menuItem"  style="padding-left: 2px;"
                       v-for="(item, index) in sortedItems"
                       :key="item.id"
                       :style="{ transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)` }"
+                      @mousedown.prevent="startDrag" @mouseup="endDrag" @mousemove="drag"
                   >
-                    <span class="itemAction item-drag-action">
+                    <span class="itemAction item-drag-action" >
                       <img class="brain-icon-drag" src="../assets/images/拖动.png">
                     </span>
                     <div class="itemwrapper">
@@ -87,9 +89,8 @@
                       </div>
                     </div>
                     <div class="badgewrapper"></div>
-                    <span class="itemAction books-action popover-trigger ">
-                      <img class="icon-new-ellipsis" src="../assets/images/省略号.png" >
-
+                    <span class="itemAction books-action" @click="removeItem(index)">
+                      <img class="icon-new-ellipsis" src="../assets/images/删除.png" >
                     </span>
                   </li>
                 </div>
@@ -133,7 +134,105 @@
 
 
     <template v-slot:main>
+      <div class="ant-col Dashboard superSidebarInvisible">
+        <div class="Books-container" >
+          <div class="Books-header">
+            <div class="Books-bookTitle DashboardTitle-title">知识库</div>
+          </div>
+          <div class="Books-module_commonList">
+            <div class="CommonUsedList-module">
+              <div class="CommonUsedList-listWrapper">
+                <div class="CommonUsedList-listHeadWrapper" >
+                  <h6 class="CommonUsedList-listHead">常用</h6>
+                  <div class="CommonUsedList-module_listHead CommonUsedList-listHeadArrow" @click="toggleList">
+                    <span>{{ isListOpen ? '收起' : '展开' }}</span>
+                    <img class="arrowup" :class="{ 'flipped': !isListOpen }" src="../assets/images/上箭头.png" alt="收起/展开" />
+                  </div>
+                </div>
+                <div class="brain-sortable CommonUsedList-list" ref="list" v-show="isListOpen">
+                  <div class="CommonUsedList-listItem"
+                       v-for="(item, index) in sortedItems"
+                       :key="item.id"
+                       @mousedown.prevent="startDragDiv" @mousemove="dragDiv" @mouseup="endDragDiv"
+                       >
+                    <div class="CommonUsedList-module_listItem CommonUsedList-hasDesc" draggable="true">
+                        <div class="CommonUsedList-btnDrag brain-tooltip">
+                          <img class="brain-drag CommonUsedList-icon" src="../assets/images/拖动.png"
+                          style="width: 16px;min-width: 16px;height: 16px">
+                          <div class="tooltip-text">拖动调整位置</div>
+                        </div>
+                      <nuxt-link :to="item.link" class="CommonUsedList-title">
+                        <span class="CommonUsedList-module_icon">
+                          <img class="brain-icon" src="../assets/images/知识库.png"
+                          style="width: 24px;height: 24px;min-width: 24px" title="d">
+                          <span class="image-tooltip">文档</span>
+                        </span>
+                        <div class="CommonUsedList-content">
+                          <div class="CommonUsedList-text">
+                            <span class="CommonUsedList-module_text" title="d">{{item.name}}</span>
+                          </div>
+                          <span class="CommonUsedList-description" title="d">{{item.content}}</span>
+                        </div>
+                      </nuxt-link>
+                      <div class="CommonUsedList-actionsIcon CommonUsedList brain-popover-trigger">
+                        <img class="brain-icon brain-icon-new-ellipsis" src="../assets/images/省略号.png">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="Books-layout">
+            <div class="Books-segmented">
+              <div class="rc-segmented segmented brain-segmented">
+                <div class="segmented-group">
+                  <label class="segmented-item segmented-item-selected">
+                    <input class="segmented-item-input" type="radio" checked="">
+                    <div class="segmented-item-label" title="我个人的">
+                      我个人的
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <div class="index-header">
+                  <div class="index-headerLeft"></div>
+                  <div class="index-headerRight">
+                    <button class="ant-btn ant-dropdown-trigger index-create dropdown-trigger">
+                       <img class="brain-icon brain-icon-add icon-img index-createIcon index-size"
+                       src="../assets/images/加号.png" width="1em" height="1em">
+                       <img class="brain-icon brain-icon-arrow-down icon-img index-createIcon index-size"
+                       src="../assets/images/下、箭头下.png" width="1em" height="1em">
+                    </button>
+                    <div class="index-headerSwitch">
+                      <div class="index-switchBtn index-switchBtnSelected brain-tooltip">
+                        <img class="brain-icon  brain-icon-card-style icon-img index-size" src="../assets/images/分类.png"
+                        style="height: 24px;width: 24px">
+                      </div>
+                      <span class="index-switchLine"></span>
+                      <div class="index-switchBtn brain-tooltip">
+                        <img class="brain-icon brain-icon-nav-open icon-img index-size"
+                        src="../assets/images/列表.png">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="book_stack" class="BookStack-stack BookStack-editable">
+              <div class="BookStack-header">
+                <div class="BlockName-name">
+                    <span class="BlockName-title BlockName-editableSpan">我的知识库</span>
+                </div>
+                <div id="book_actions" class="BookStack-actions">
 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </template>
   </NuxtLayout>
 </template>
@@ -141,7 +240,7 @@
 <script setup>
 import NuxtLayout from '../layouts/default.vue';
 import Popup from '../components/Popup.vue';
-import { ref, onMounted, onUnmounted, watch  } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 const showPopup = ref(false);
 const showHover = ref(false);
@@ -160,20 +259,21 @@ const toggleSubMenu = () => {
   isSubMenuOpen.value = !isSubMenuOpen.value;
 };
 
-
-
-
+const isListOpen = ref(true); // 控制列表显示和隐藏的状态
+const toggleList = () => {
+  isListOpen.value = !isListOpen.value;
+};
 
 const items = ref([
   // 假设的菜单项数据，每个对象有一个唯一的 id 和其他属性
-  { id: 1, name: 'Item 1' ,link:'hh'},
-  { id: 2, name: 'Item 2' },
-  { id: 3, name: 'Item 3' },
-  { id: 4, name: 'Item 4' },
+  { id: 1, name: 'Item 1' ,link:'hh',content:'dd'},
+  { id: 2, name: 'Item 2', },
+  { id: 3, name: 'Item 3',},
+  { id: 4, name: 'Item 4',},
   // ...
 ]);
 
-const sortedItems = ref([]); // 用于渲染的排序后的项
+const sortedItems = ref([...items.value]); // 用于渲染的排序后的项
 const draggingItem = ref(null);
 const dragStartIndex = ref(null);
 const dragOffset = ref({ x: 0, y: 0 }); // 拖拽时的偏移量
@@ -186,8 +286,8 @@ onMounted(() => {
 
 // 清理拖拽相关事件监听
 onUnmounted(() => {
-  document.removeEventListener('mousemove', drag);
-  document.removeEventListener('mouseup', endDrag);
+  document.removeEventListener('mousemove', dragDiv);
+  document.removeEventListener('mouseup', endDragDiv);
 });
 
 const startDrag = (event) => {
@@ -268,6 +368,104 @@ const endDrag = (event) => {
   draggingItem.value = null; // 重置拖拽项
   dragStartIndex.value = null; // 重置起始索引
 };
+
+
+const startDragDiv = (event) => {
+  const div = event.target.closest('.CommonUsedList-listItem');
+  if (div) {
+    draggingItem.value = div;
+    dragStartIndex.value = Array.from(div.parentNode.children).indexOf(div);
+    isDragging.value = true;
+    dragOffset.value = {
+      x: event.clientX - div.offsetLeft,
+      y: event.clientY - div.offsetRotate,
+    };
+    document.addEventListener('mousemove', dragDiv);
+    document.addEventListener('mouseup', endDragDiv);
+  }
+};
+
+const dragDiv = (event) => {
+  if (!isDragging.value) return;
+  const div = draggingItem.value;
+  const rect = div.getBoundingClientRect();
+  const dx = event.clientX - rect.left;
+  const dy = event.clientY - rect.top;
+  const newX = dx - dragOffset.value.x;
+  const newY = dy - dragOffset.value.y;
+
+  // 应用拖拽偏移量到元素上
+  Object.assign(div.style, {
+    position: 'absolute',
+    left: `${newX}px`,
+    top: `${newY}px`,
+  });
+};
+
+const endDragDiv = (event) => {
+  if (!isDragging.value) return;
+  isDragging.value = false;
+  document.removeEventListener('mousemove', dragDiv);
+  document.removeEventListener('mouseup', endDragDiv);
+
+  const div = draggingItem.value;
+  const ul = div.parentNode;
+  const children = Array.from(ul.children);
+  const dragIndex = dragStartIndex.value;
+  let targetIndex = dragIndex;
+
+  // 找到鼠标释放时目标项的索引
+  for (let i = 0; i < children.length; i++) {
+    if (event.clientY < children[i].getBoundingClientRect().bottom) {
+      targetIndex = i;
+      break;
+    }
+  }
+
+  // 如果目标索引和起始索引不同，则交换位置
+  if (targetIndex !== dragIndex) {
+    const draggedItem = children[dragIndex];
+    const targetItem = children[targetIndex];
+
+    // 使用DOM操作交换位置
+    ul.insertBefore(draggedItem, targetItem);
+
+    // 更新排序后的项数组
+    const newItems = [...sortedItems.value];
+    const [removedItem] = newItems.splice(dragIndex, 1);
+    newItems.splice(targetIndex, 0, removedItem);
+    sortedItems.value = newItems;
+  }
+
+  // 重置拖拽元素的样式
+  Object.assign(div.style, {
+    position: '',
+    left: '',
+    top: '',
+  });
+
+  dragOffset.value = { x: 0, y: 0 };
+  draggingItem.value = null;
+  dragStartIndex.value = null;
+};
+
+
+// 新增菜单项的方法
+const addItem = (newItem) => {
+  const newItemWithId = { ...newItem, id: items.value.length + 1 };
+  items.value.push(newItemWithId);
+  sortedItems.value.push(newItemWithId);
+};
+
+// 删除菜单项的方法
+const removeItem = (index) => {
+  items.value.splice(index, 1);
+  sortedItems.value.splice(index, 1);
+};
+
+
+
+
 </script>
 
 <style scoped>
@@ -488,7 +686,6 @@ a{
 }
 .dashboard-sidebar-scrollbar{
   flex: 1 1 auto;
-  overflow: hidden;
   scrobar-color: #e7e9e8;
   scrollbar-width: thin;
 }
@@ -637,7 +834,6 @@ a{
 .resourcemenu .menuItem{justify-content: flex-start;position: relative;padding-right: 4px}
 .ant-menu-inline .ant-menu-item{
   padding: 0 16px;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 .ant-menu-item{white-space: nowrap;}
@@ -683,7 +879,7 @@ a{
   display: flex;
   align-items: center;
 }
-.ant-menu-item a{color: #262626}
+.ant-menu-item a{color: #262626;cursor: move;}
 .bookItem .iconwrapper{
   width: 18px;
   justify-content: center;
@@ -838,4 +1034,450 @@ button{
   font-size: 12px;
   border-width: 0;
 }
+.Dashboard{
+  padding: 0;
+  flex: auto;
+  min-width: 0;
+}
+.ant-col {
+  position: relative;
+  max-width: 100%;
+  min-height: 1px;
+}
+.Books-container{
+  position: relative;
+  max-width: 1664px;
+  padding: 26px 36px;
+}
+.Books-header{
+  display: flex;
+  justify-content: space-between;
+}
+.Books-container .Books-bookTitle{margin-bottom: 2px;}
+.DashboardTitle-title{
+  font-weight: 500;
+  font-size: 18px;
+  color: #262626;
+}
+.Books-module_commonList{
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-top: 12px;
+}
+.CommonUsedList-listWrapper{
+  background-color: #fafafa;
+  border-radius: 8px;
+  padding: 16px 16px 6px 16px;
+  height: auto;
+}
+.CommonUsedList-listHeadWrapper{
+  display: flex;
+  justify-content: space-between;
+  color: #8a8f8d;
+}
+.CommonUsedList-module .CommonUsedList-listHead{
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #585a5a;
+}
+h6{margin-top: 0;}
+.CommonUsedList-module .CommonUsedList-module_listHead{
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #585a5a;
+}
+.CommonUsedList-listHeadArrow img.flipped {
+  transform: rotate(180deg);
+}
+.CommonUsedList-listHeadArrow{
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 7px;
+}
+.CommonUsedList-listHeadArrow img{
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+.CommonUsedList-listHeadArrow button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+}
+.arrowup{
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -.125em;
+  width: 16px;
+  height: 16px;
+  text-rendering: optimizeLegibility;
+}
+.CommonUsedList-list{
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-left: -4px;
+  margin-right: -4px;
+}
+.brain-sortable [draggable="true"] {
+  cursor: grab;
+}
+.CommonUsedList-listItem{
+  width: 32%;
+  padding: 0 4px;
+  margin-bottom: 16px;
+}
+.CommonUsedList-module_listItem.CommonUsedList-hasDesc{padding: 10px 28px 6px 20px;}
+
+.brain-drag:hover{background-color: #e7e9e8}
+.CommonUsedList-module_listItem{
+  min-height: 64px;
+  position: relative;
+  background: #fff;
+  border: 1px solid #f4f5f5;
+  border-radius: 6px;
+  transition: background .3s ease 0s;
+}
+.CommonUsedList-module_listItem:hover .CommonUsedList-btnDrag{visibility: visible;}
+.CommonUsedList-module_listItem:hover{cursor: grab}
+.CommonUsedList-module_listItem .CommonUsedList-btnDrag{
+  visibility: hidden;
+  position: absolute;
+  top: 40%;
+  left: 2px;
+  margin-top: -10px;
+  color: #8a8f8d;
+  width: 18px;
+  height: 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.CommonUsedList-module_listItem .CommonUsedList-btnDrag img{
+  font-size: 16px;
+  position: relative;
+  left: 4px;
+}
+.CommonUsedList-module_listItem .CommonUsedList-icon{
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  color: #585a5a;
+}
+.brain-drag{
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  text-rendering: optimizeLegibility;
+}
+.brain-tooltip {
+  position: relative; /* 设置相对定位 */
+  display: inline-block; /* 设置为行内块级元素 */
+}
+.brain-tooltip .tooltip-text {
+  display: none; /* 默认不显示提示文本 */
+  position: absolute; /* 绝对定位 */
+  left: 0; /* 根据需要调整位置 */
+  bottom: 100%; /* 显示在图标下方 */
+  padding: 5px 10px; /* 文本周围的填充 */
+  margin-bottom: 10px; /* 与图标底部的距离 */
+  background-color: rgba(0, 0, 0, 0.75); /* 背景颜色 */
+  color: #fff; /* 文本颜色 */
+  border-radius: 4px; /* 圆角 */
+  white-space: nowrap; /* 防止文本换行 */
+  font-size: 12px; /* 文本大小 */
+  z-index: 1; /* 确保 Tooltip 在上层 */
+}
+.brain-tooltip:hover .tooltip-text {
+  display: block; /* 悬停时显示提示文本 */
+}
+.CommonUsedList-module_listItem .CommonUsedList-title{
+  display: flex;
+  align-items: center;
+  color: #585a5a;
+}
+.CommonUsedList-module_listItem .CommonUsedList-module_icon{
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  color: #585a5a;
+}
+/* 定义悬停时的提示样式 */
+.image-tooltip {
+  display: none; /* 默认不显示 */
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.75); /* 背景颜色 */
+  color: #fff; /* 文本颜色 */
+  padding: 5px 10px; /* 内边距 */
+  border-radius: 4px; /* 圆角 */
+  font-size: 12px; /* 字体大小 */
+  white-space: nowrap; /* 防止文本换行 */
+  pointer-events: none; /* 防止遮挡鼠标事件 */
+  z-index: 100; /* 确保提示在上层 */
+  /* 根据需要调整位置 */
+  bottom: 90%; /* 显示在图标下方 */
+  left: 10%; /* 水平居中 */
+  transform: translateX(-50%); /* 水平居中 */
+  width: max-content; /* 宽度适应内容 */
+}
+
+/* 悬停时显示提示信息 */
+.CommonUsedList-module_icon:hover .image-tooltip {
+  display: block; /* 显示提示信息 */
+}
+.CommonUsedList-content{width: 100%}
+.CommonUsedList-module_listItem.CommonUsedList-hasDesc .CommonUsedList-text{height: 20px}
+.CommonUsedList-text{display: flex;}
+.CommonUsedList-text{
+  max-width: calc(100% - 50px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.CommonUsedList-module_listItem .CommonUsedList-module_text{
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 24px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #262626;
+}
+.CommonUsedList-module_listItem:hover .CommonUsedList {
+  visibility: visible;
+}
+.CommonUsedList-actionsIcon:hover{background-color: #e7e9e8;}
+.CommonUsedList-description{
+  max-width: calc(100% - 50px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: 400;
+  font-size: 12px;
+  color: #8a8f8d;
+  line-height: 20px;
+  display: inline-block;
+}
+.CommonUsedList-module_listItem .CommonUsedList{
+  visibility: hidden;
+  position: absolute;
+  top: 26px;
+  right: 16px;
+  margin-top: -8px;
+  color: #585a5a;
+}
+.CommonUsedList-actionsIcon{
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  border-radius: 6px;
+  font-size: 16px;
+  padding: 0 6px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.brain-icon-new-ellipsis{
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+}
+.Books-container .Books-layout{margin-top: 20px}
+.Books-segmented{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.segmented{border-radius: 8px;overflow: hidden;}
+.rc-segmented{display: inline-block;padding: 2px;background-color: rgba(0,0,0,.04);}
+.segmented-group{
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  border-radius: 2px;
+}
+.segmented .segmented-item-selected{
+  color: #003d23;
+  font-weight: 500;
+  box-shadow: 0 1px 2px -2px rgba(0,0,0,.08),0 2px 6px 0 rgba(0,0,0,.04),0 4px 8px 1px rgba(0,0,0,.02);
+}
+.segmented .segmented-item{
+  border-radius: 6px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+.Books-segmented .segmented-item{padding-left: 16px;padding-right: 16px}
+.segmented-item-selected{background-color: #fff}
+.segmented-item{
+  position: relative;
+  min-height: 28px;
+  padding: 4px 10px;
+  text-align: center;
+  cursor: pointer;
+}
+a,label{touch-action: manipulation}
+input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+.segmented-item-input{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+input{
+  overflow: visible;
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+}
+.segmented .segmented-item-label{
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.segmented-item-label{z-index: 2;line-height: 24px}
+.segmented .segmented-item-label::after{
+  font-weight: 500;
+  content: attr(title);
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+  user-select: none;
+  pointer-events: none;
+}
+.index-header{
+  height: 32px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.index-headerLeft{display: flex;}
+.index-headerRight{display: flex;}
+.index-headerRight .ant-btn{margin-left: 12px !important;}
+.index-headerRight .index-create{
+  height: 32px;
+  width: 64px;
+  border-radius: 6px;
+  display: flex;
+  padding: 0 12px;
+  justify-content: space-between;
+  line-height: 32px;
+}
+button,html[type="button"]{-webkit-appearance: button;}
+.dropdown-trigger{cursor: pointer}
+.ant-btn{
+  color: #003d23;
+  background: #fff;
+  border-color: #e7e9e8;
+  box-shadow: none;
+  text-shadow: none;
+  font-weight: 500;
+  outline: 0;
+  position: relative;
+  white-space: nowrap;
+  text-align: center;
+  transition: all .3s cubic-bezier(.645,.045,.355,1);
+  user-select: none;
+  touch-action: manipulation;
+  font-size: 14px;
+}
+button{
+  text-transform: none;
+  overflow: visible;
+  margin: 0;
+  font-family: inherit;
+}
+.index-headerRight .index-createIcon{
+  width: 16px;
+  height: 16px;
+  margin-top: 7px;
+}
+.ant-btn > .brain-icon{display: inline-block}
+.index-header .index-headerSwitch{
+  display: flex;
+  margin-left: 12px;
+  margin-top: 3px;
+}
+.index-header .index-headerSwitch .index-switchBtnSelected{
+  color: #262626;
+  background-color: #eff0f0
+}
+.index-header .index-headerSwitch .index-switchBtn{
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+}
+.index-header .index-headerSwitch .index-switchBtn img{
+  position: relative;
+  top: 3px;
+  left: 5px;
+}
+.index-size{width: 24px;height: 24px}
+.index-header .index-switchLine{
+  border-right: 1px solid #e7e9e8;
+  height: 16px;
+  position: relative;
+  top: 6px;
+  margin: 0 5px;
+}
+.index-header .index-headerSwitch .index-switchBtn{
+  color: #8a8f8d;
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+}
+.BookStack-stack{position: relative;margin-bottom: 4px;}
+.BookStack-header{
+  display: flex;
+  align-items: center;
+  height: 40px;
+  position: relative;
+  margin-bottom: 8px;
+  padding-top: 8px;
+}
+.BlockName-name{
+  font-weight: 500;
+  font-size: 14px;
+  min-width: 10px;
+  color: #262626;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.BlockName-name span{border-bottom: 1px solid transparent;}
+.BlockName-title{
+  max-width: 600px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.BookStack-actions{display: none}
 </style>

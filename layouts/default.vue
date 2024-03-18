@@ -21,7 +21,7 @@
         <div class="main-right-content">
           <div class="mainright">
             <div class="dashboardlayout">
-              <div class="ant-row">
+              <div class="ant-row" style="row-gap: 0;">
                   <slot name="main"></slot>
               </div>
             </div>

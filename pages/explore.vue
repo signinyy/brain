@@ -66,6 +66,7 @@
                   </div>
                 </span>
               </div>
+
               <ul id="menu-books-popup" class="ant-menu ant-menu-sub ant-menu-inline"  v-show="isSubMenuOpen"   @mousedown.prevent="startDrag" @mouseup="endDrag" @mousemove="drag" >
                 <div class="sortable" data-type="books" eventkey="知识库-sortable"   >
                   <li class="ant-menu-item menuItem"  style="padding-left: 2px;"
@@ -73,7 +74,7 @@
                       :key="item.id"
                       :style="{ transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)` }"
                   >
-                    <span class="itemAction item-drag-action">
+                    <span class="itemAction item-drag-action" >
                       <img class="brain-icon-drag" src="../assets/images/拖动.png">
                     </span>
                     <div class="itemwrapper">
@@ -87,13 +88,13 @@
                       </div>
                     </div>
                     <div class="badgewrapper"></div>
-                    <span class="itemAction books-action popover-trigger ">
-                      <img class="icon-new-ellipsis" src="../assets/images/省略号.png" >
-
+                    <span class="itemAction books-action" @click="removeItem(index)">
+                      <img class="icon-new-ellipsis" src="../assets/images/删除.png" >
                     </span>
                   </li>
                 </div>
               </ul>
+
             </li>
           </ul>
           <div style="display: none;" aria-hidden="true">
@@ -133,7 +134,11 @@
 
 
     <template v-slot:main>
-
+      <div class="main">
+        <div class="main-content" >
+          <!-- 主内容的具体内容 -->
+        </div>
+      </div>
     </template>
   </NuxtLayout>
 </template>
@@ -141,7 +146,7 @@
 <script setup>
 import NuxtLayout from '../layouts/default.vue';
 import Popup from '../components/Popup.vue';
-import { ref, onMounted, onUnmounted, watch  } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 const showPopup = ref(false);
 const showHover = ref(false);
@@ -160,16 +165,12 @@ const toggleSubMenu = () => {
   isSubMenuOpen.value = !isSubMenuOpen.value;
 };
 
-
-
-
-
 const items = ref([
   // 假设的菜单项数据，每个对象有一个唯一的 id 和其他属性
   { id: 1, name: 'Item 1' ,link:'hh'},
-  { id: 2, name: 'Item 2' },
-  { id: 3, name: 'Item 3' },
-  { id: 4, name: 'Item 4' },
+  { id: 2, name: 'Item 2', },
+  { id: 3, name: 'Item 3',},
+  { id: 4, name: 'Item 4',},
   // ...
 ]);
 
@@ -268,6 +269,12 @@ const endDrag = (event) => {
   draggingItem.value = null; // 重置拖拽项
   dragStartIndex.value = null; // 重置起始索引
 };
+
+
+function removeItem(index) {
+  items.value.splice(index, 1);
+}
+
 </script>
 
 <style scoped>
@@ -488,7 +495,6 @@ a{
 }
 .dashboard-sidebar-scrollbar{
   flex: 1 1 auto;
-  overflow: hidden;
   scrobar-color: #e7e9e8;
   scrollbar-width: thin;
 }
@@ -637,7 +643,6 @@ a{
 .resourcemenu .menuItem{justify-content: flex-start;position: relative;padding-right: 4px}
 .ant-menu-inline .ant-menu-item{
   padding: 0 16px;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 .ant-menu-item{white-space: nowrap;}
@@ -683,7 +688,7 @@ a{
   display: flex;
   align-items: center;
 }
-.ant-menu-item a{color: #262626}
+.ant-menu-item a{color: #262626;cursor: move;}
 .bookItem .iconwrapper{
   width: 18px;
   justify-content: center;
@@ -838,5 +843,4 @@ button{
   font-size: 12px;
   border-width: 0;
 }
-
 </style>
