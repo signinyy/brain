@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nuxtjs/composition-api": "^0.33.1",
+    "element-plus": "^2.6.1",
     "nuxt": "^3.10.3",
     "vite": "^5.1.5",
     "vue": "^3.4.19",
@@ -19,6 +20,7 @@
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
+    "@element-plus/nuxt": "^1.0.7",
     "@nuxtjs/i18n": "^8.0.0"
   }
 }
